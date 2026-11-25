@@ -87,13 +87,13 @@ def card(plant):
     with st.container(border=True):
         picture = ASSETS / f"plant-{(plant['category_id']-1)%3}.png"
         if picture.exists():
-            st.image(str(picture), use_container_width=True)
+            st.image(str(picture), width='stretch')
         st.markdown(f'<div class="plant-name">{html.escape(plant["name"])}</div><div class="muted">{html.escape(plant["species"])}</div>', unsafe_allow_html=True)
         days = due_in(plant)
         label = 'Пора полить' if days <= 0 else f'Полив через {days} дн.'
         st.markdown(f'<p><span class="badge {"due" if days <= 0 else ""}">{label}</span></p>', unsafe_allow_html=True)
         st.caption(f'{room_names[plant["room_id"]]} · каждые {plant["watering_days"]} дн.')
-        if st.button('Отметить полив', key=f'water-{plant["id"]}', use_container_width=True):
+        if st.button('Отметить полив', key=f'water-{plant["id"]}', width='stretch'):
             if api('POST', f'/plants/{plant["id"]}/care', json={'action':'Полив'}):
                 saved(f'{plant["name"]}: полив записан')
 
@@ -164,7 +164,7 @@ elif page == 'Моя коллекция':
                 rows = [{'ID':p['id'],'Название':p['name'],'Вид':p['species'],'Категория':cats[p['category_id']],
                          'Комната':room_names[p['room_id']],'Стоимость, ₸':p['price'],
                          'Полив каждые, дн.':p['watering_days'],'Последний полив':p['last_watered']} for p in filtered]
-                st.dataframe(pd.DataFrame(rows), hide_index=True, use_container_width=True)
+                st.dataframe(pd.DataFrame(rows), hide_index=True, width='stretch')
                 st.download_button('Скачать таблицу CSV', pd.DataFrame(rows).to_csv(index=False).encode('utf-8-sig'), 'jasyl-plants.csv','text/csv')
             else:
                 for offset in range(0,len(filtered),3):
@@ -215,7 +215,7 @@ elif page == 'Журнал':
     logs = api('GET','/care-logs')
     if logs:
         names = {p['id']:p['name'] for p in plants}
-        st.dataframe(pd.DataFrame([{'Дата':x['performed_on'],'Растение':names.get(x['plant_id'],''),'Действие':x['action'],'Заметка':x['note']} for x in logs]),hide_index=True,use_container_width=True)
+        st.dataframe(pd.DataFrame([{'Дата':x['performed_on'],'Растение':names.get(x['plant_id'],''),'Действие':x['action'],'Заметка':x['note']} for x in logs]),hide_index=True,width='stretch')
     else: st.info('Пока нет записей об уходе.')
 
 else:

@@ -16,6 +16,9 @@ jobs:
           curl --fail http://localhost:8000/
           curl --fail http://localhost:8501/_stcore/health
           docker compose exec -T backend python -c "from app.database.db import engine; from sqlmodel import Session, select; from app.database.models import Plant; s=Session(engine); assert len(s.exec(select(Plant)).all()) >= 5"
+      - run: python tools/check_ui.py
+        env:
+          BACKEND_URL: http://127.0.0.1:8000
       - if: always()
         run: docker compose logs
       - if: always()

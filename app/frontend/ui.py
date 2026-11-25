@@ -11,7 +11,7 @@ BASE_URL = os.getenv('BACKEND_URL', 'http://127.0.0.1:8000').rstrip('/')
 ASSETS = Path(__file__).parent / 'assets'
 st.set_page_config(page_title='Jasyl · Мой зелёный дом', page_icon='🌿', layout='wide')
 st.markdown('''<style>
-.block-container{max-width:1250px;padding-top:2rem;padding-bottom:3rem}
+.block-container{max-width:1250px;padding-top:4.5rem;padding-bottom:3rem}
 h1,h2,h3{letter-spacing:-.035em} h1{font-size:2.8rem!important}
 [data-testid="stSidebar"]{background:#113d2c;color:#f5fff6}
 [data-testid="stSidebar"] *{color:inherit}
@@ -29,7 +29,7 @@ h1,h2,h3{letter-spacing:-.035em} h1{font-size:2.8rem!important}
 .plant-name{font-size:24px;font-weight:650;margin:8px 0 2px}
 .muted{color:#688073;font-size:15px}
 button{min-height:42px!important} [data-testid="stForm"]{background:white;border-radius:18px}
-@media(max-width:640px){.hero{padding:24px}.hero h1{font-size:2rem!important}.block-container{padding-top:1rem}}
+@media(max-width:640px){.hero{padding:24px}.hero h1{font-size:2rem!important}.block-container{padding-top:4rem}}
 </style>''', unsafe_allow_html=True)
 
 

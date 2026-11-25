@@ -4,6 +4,8 @@
 
 **Автор:** Нұрсая Жұматай, группа ИС 24 а1
 
+[![Tests and Docker](https://github.com/nursayaya1/applied-is-project-2026-jasyl/actions/workflows/checks.yml/badge.svg)](https://github.com/nursayaya1/applied-is-project-2026-jasyl/actions/workflows/checks.yml)
+
 ## Описание предметной области
 
 Jasyl помогает вести домашнюю коллекцию растений. Я могу добавить растение, указать его комнату, категорию и период полива. В журнале сохраняются выполненные действия по уходу. Поиск и фильтры помогают быстро найти нужное растение.
@@ -24,6 +26,8 @@ Python 3.11+, FastAPI, Uvicorn, SQLite, SQLModel, Streamlit, Requests, Docker Co
 ## Локальный запуск
 
 ```bash
+git clone https://github.com/nursayaya1/applied-is-project-2026-jasyl.git
+cd applied-is-project-2026-jasyl
 python -m venv .venv
 # Windows: .venv\Scripts\activate
 # Linux / macOS: source .venv/bin/activate
@@ -55,3 +59,23 @@ python -m pytest -q
 ```
 
 Тесты используют отдельную базу в памяти и не изменяют коллекцию.
+
+## Интерфейс
+
+![Главная страница](docs/screenshots/overview.png)
+
+Доступны обзор, коллекция с карточками и таблицей, поиск и фильтры, добавление и редактирование, удаление с подтверждением, календарь и журнал ухода, экспорт CSV.
+
+## Документация
+
+- [План недель](docs/requirements.md)
+- [Результаты проверки](docs/review.md)
+- Word-отчёты расположены в `reports/`.
+
+## Публикация
+
+Основной вариант — Docker Compose. Для Streamlit Community Cloud подготовлен `streamlit_app.py`: он запускает тот же FastAPI на внутреннем порту и открывает тот же интерфейс. В настройках публикации выбираются этот репозиторий, ветка `main` и файл `streamlit_app.py`.
+
+Публичная версия предназначена для демонстрационных данных: авторизация пока не предусмотрена, а локальная SQLite на Community Cloud не гарантирует сохранение после перезапуска. В Docker данные сохраняются в томе.
+
+На компьютере автора для проверки использовались свободные порты 8010 и 8510, так как стандартные порты были заняты другим проектом.

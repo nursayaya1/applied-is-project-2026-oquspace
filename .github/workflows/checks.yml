@@ -1,0 +1,22 @@
+name: Tests and Docker
+on: [push, pull_request]
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements.txt
+      - run: python -m pytest -v
+      - run: docker compose config --quiet
+      - run: docker compose up --build -d --wait
+      - run: |
+          curl --fail http://localhost:8000/
+          curl --fail http://localhost:8501/_stcore/health
+          docker compose exec -T backend python -c "from app.database.db import engine; from sqlmodel import Session, select; from app.database.models import Plant; s=Session(engine); assert len(s.exec(select(Plant)).all()) >= 5"
+      - if: always()
+        run: docker compose logs
+      - if: always()
+        run: docker compose down
